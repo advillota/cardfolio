@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">cardfolio</string>
+    <string name="name">Anne Villota</string>
+    <string name="hobby">Martial Arts</string>
+    <string name="card_name_label">Name</string>
+    <string name="card_hobby_label">Hobby</string>
+    <string name="card_age_label">Age</string>
+
 </resources>
