@@ -98,7 +98,7 @@ class MainActivity : ComponentActivity() {
 }
 @Composable
 fun Cardfolio() {
-
+    val context = LocalContext.current
     var name by remember { mutableStateOf(value = "") }
     var hobby by remember { mutableStateOf(value ="") }
     var age by remember { mutableStateOf(value ="") }
@@ -212,16 +212,35 @@ fun Cardfolio() {
 
                         OutlinedButton( //show
                             onClick = {
+                                var missingFields = mutableListOf<String>()
                                 if (name.isNotBlank() && hobby.isNotBlank() && age.isNotBlank()) {
                                     isEditing = false
                                 }
-                            },
+                                else{
+                                    if(name.isBlank()){
+                                        missingFields.add("name");
+                                    }
+                                    if(hobby.isBlank()){
+                                        missingFields.add("hobby");
+                                    }
+                                    if(age.isBlank()){
+                                        missingFields.add("age");
+                                    }
+                                }
+                                if (missingFields.isEmpty()) {
+                                    isEditing = false
+                                    Toast.makeText(context, "Saved successfully!", Toast.LENGTH_SHORT).show()
+                                } else {
+                                    val missingMessage = missingFields.joinToString(" and ")
+                                    Toast.makeText(context, "Please fill in: $missingMessage", Toast.LENGTH_SHORT).show()
+                                }
+                                      },
+
                             enabled = isEditing,
 
 
                         ) {
                             Text(text = stringResource(id = R.string.show_button));
-                            Text(text = stringResource(id = R.string.edit_button))
                             Icon(
                                 imageVector = Icons.Default.Lock,
                                 contentDescription = "Show"

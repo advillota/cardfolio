@@ -10,4 +10,9 @@
     <string name="show_button">Show</string>
     <string name="edit">Editing</string>
     <string name="lock">Locked</string>
+    <string name="name2">Name</string>
+    <string name="hobby2">Hobby</string>
+    <string name="age">Age</string>
+
+
 </resources>
