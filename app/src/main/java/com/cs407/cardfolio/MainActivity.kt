@@ -193,22 +193,41 @@ fun Cardfolio() {
 
                     )
 
-                    OutlinedButton( //edit
-                        onClick = { isEditing = true },
-                        enabled = !isEditing,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(text = stringResource(id = R.string.edit_button))
-                    }
-                    OutlinedButton( //show
-                        onClick = { if (name.isNotBlank() && hobby.isNotBlank() && age.isNotBlank()) {
-                            isEditing = false
-                        }},
-                        enabled = isEditing,
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(16.dp)
 
-                        modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text(text = stringResource(id = R.string.show_button));
+                        OutlinedButton( //edit
+                            onClick = { isEditing = true },
+                            enabled = !isEditing,
+
+
+                        ) {
+                            Text(text = stringResource(id = R.string.edit_button))
+                            Icon(
+                                imageVector = Icons.Default.Edit,
+                                contentDescription = "Show"
+                            )
+                        }
+
+                        OutlinedButton( //show
+                            onClick = {
+                                if (name.isNotBlank() && hobby.isNotBlank() && age.isNotBlank()) {
+                                    isEditing = false
+                                }
+                            },
+                            enabled = isEditing,
+
+
+                        ) {
+                            Text(text = stringResource(id = R.string.show_button));
+                            Text(text = stringResource(id = R.string.edit_button))
+                            Icon(
+                                imageVector = Icons.Default.Lock,
+                                contentDescription = "Show"
+                            )
+
+                        }
                     }
                     AssistChip(
                         onClick = { isEditing = !isEditing },
