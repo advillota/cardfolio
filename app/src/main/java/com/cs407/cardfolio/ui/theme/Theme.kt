@@ -9,12 +9,34 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
     secondary = PurpleGrey80,
     tertiary = Pink80
+)
+data class CustomColors(
+    val gradientTop: Color,
+    val gradientBottom: Color
+)
+private val LocalCustomColors = staticCompositionLocalOf {
+    CustomColors(
+        gradientTop = Color.Unspecified,
+        gradientBottom = Color.Unspecified
+    )
+}
+val LightCustomColors = CustomColors(
+    gradientTop = LightGradientTop,
+    gradientBottom = LightGradientBottom
+)
+val DarkCustomColors = CustomColors(
+    gradientTop = DarkGradientTop,
+    gradientBottom = DarkGradientBottom
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -32,7 +54,12 @@ private val LightColorScheme = lightColorScheme(
     onSurface = Color(0xFF1C1B1F),
     */
 )
-
+object AppTheme {
+    val customColors: CustomColors
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalCustomColors.current
+}
 @Composable
 fun CardfolioTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -40,6 +67,7 @@ fun CardfolioTheme(
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
+
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
@@ -49,10 +77,17 @@ fun CardfolioTheme(
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
-
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
+    val currentCustomColors = if (darkTheme) DarkCustomColors else LightCustomColors
+    CompositionLocalProvider(LocalCustomColors provides currentCustomColors) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = Typography,
+            content = content
+        )
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = Typography,
+            content = content
+        )
+    }
 }

@@ -3,6 +3,10 @@ package com.cs407.cardfolio.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val Purple80 = Color(0xFFD0BCFF)
+val LightGradientTop = Color(0xFFE0E0E0)
+val LightGradientBottom = Color(0xFFFFCDD2)
+val DarkGradientTop = Color(0xFFBBDEFB)
+val DarkGradientBottom = Color(0xFF424242)
 val PurpleGrey80 = Color(0xFFCCC2DC)
 val Pink80 = Color(0xFFEFB8C8)
 

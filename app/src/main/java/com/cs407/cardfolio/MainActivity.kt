@@ -34,6 +34,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -50,23 +51,44 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.cs407.cardfolio.ui.theme.AppTheme
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+
             CardfolioTheme {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.fillMaxSize()
+                val gradientTopColor = AppTheme.customColors.gradientTop
+                val gradientBottomColor = AppTheme.customColors.gradientBottom
+                Surface(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(
+                            brush = Brush.verticalGradient(
+                                colors = listOf(
+                                    gradientTopColor,
+                                    gradientBottomColor
+                                )
+                            )
+                        ),
+                    color = Color.Transparent
                 ) {
-                    Text(
-                        text = stringResource(id = R.string.app_name),
-                        style = MaterialTheme.typography.headlineLarge,
-                        modifier = Modifier.padding(top = 16.dp, bottom = 24.dp)
-                    )
-                    Cardfolio()
+
+
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.app_name),
+                            style = MaterialTheme.typography.headlineLarge,
+                            modifier = Modifier.padding(top = 16.dp, bottom = 24.dp)
+                        )
+                        Cardfolio()
+                    }
                 }
             }
         }
@@ -74,6 +96,7 @@ class MainActivity : ComponentActivity() {
 }
 @Composable
 fun Cardfolio() {
+
     var name by remember { mutableStateOf(value = "") }
     var hobby by remember { mutableStateOf(value ="") }
     var age by remember { mutableStateOf(value ="") }
