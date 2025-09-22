@@ -27,11 +27,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material3.AssistChip
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -100,7 +102,7 @@ fun Cardfolio() {
     var name by remember { mutableStateOf(value = "") }
     var hobby by remember { mutableStateOf(value ="") }
     var age by remember { mutableStateOf(value ="") }
-
+    var isEditing by remember { mutableStateOf(true) }
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
@@ -160,17 +162,20 @@ fun Cardfolio() {
                         onValueChange = { name = it },
                         label = { Text(text = stringResource(id = R.string.card_name_label)) },
                         leadingIcon = { Icon(Icons.Default.Person, contentDescription = null) },
+                        enabled = isEditing,
                         modifier = Modifier.fillMaxWidth()
 
                     )
                     OutlinedTextField(
                         value = hobby,
+                        enabled = isEditing,
                         onValueChange = { hobby = it },
                         label = { Text(text=stringResource(id = R.string.card_hobby_label)) },
                         leadingIcon = { Icon(Icons.Default.Favorite, contentDescription = null) },
                         modifier = Modifier.fillMaxWidth()
                     )
                     OutlinedTextField(
+
                         value = age,
                         onValueChange = { input ->
                             if (input.all { it.isDigit() }) {
@@ -179,8 +184,48 @@ fun Cardfolio() {
                         },
                         label = { Text(text=stringResource(id = R.string.card_age_label)) },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        enabled = isEditing,
+                        supportingText = {if (isEditing) Text(text=stringResource(id = R.string.age_warning))},
                         leadingIcon = { Icon(Icons.Default.DateRange, contentDescription = null) },
+
+                        modifier = Modifier.fillMaxWidth(),
+
+
+                    )
+
+                    OutlinedButton( //edit
+                        onClick = { isEditing = true },
+                        enabled = !isEditing,
                         modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(text = stringResource(id = R.string.edit_button))
+                    }
+                    OutlinedButton( //show
+                        onClick = { if (name.isNotBlank() && hobby.isNotBlank() && age.isNotBlank()) {
+                            isEditing = false
+                        }},
+                        enabled = isEditing,
+
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(text = stringResource(id = R.string.show_button));
+                    }
+                    AssistChip(
+                        onClick = { isEditing = !isEditing },
+                        label = {
+                            Text(
+                                text = if (isEditing)
+                                    stringResource(id = R.string.edit)
+                                else
+                                    stringResource(id = R.string.lock)
+                            )
+                        },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = if (isEditing) Icons.Default.Edit else Icons.Default.Lock,
+                                contentDescription = null
+                            )
+                        }
                     )
                 }
             }

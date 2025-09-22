@@ -5,5 +5,9 @@
     <string name="card_name_label">Name</string>
     <string name="card_hobby_label">Hobby</string>
     <string name="card_age_label">Age</string>
-
+    <string name="age_warning">Only Numbers</string>
+    <string name="edit_button">Edit</string>
+    <string name="show_button">Show</string>
+    <string name="edit">Editing</string>
+    <string name="lock">Locked</string>
 </resources>
